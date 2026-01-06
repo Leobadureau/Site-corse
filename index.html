@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="co">
+<head>
+  <meta charset="UTF-8">
+  <title>Catalogu di siti – Cultura Corsa</title>
+  <style>
+    :root {
+      --corsica-green: #0b5d3b;
+      --corsica-white: #ffffff;
+      --corsica-gray: #f2f2f2;
+      --corsica-black: #1a1a1a;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Georgia", serif;
+      background: var(--corsica-gray);
+      color: var(--corsica-black);
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--corsica-green), #073b26);
+      color: var(--corsica-white);
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-style: italic;
+      opacity: 0.9;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 25px;
+    }
+
+    /* Présentation personnelle */
+    .presentation {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px 35px;
+      background: var(--corsica-white);
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border-left: 8px solid var(--corsica-green);
+      text-align: center;
+    }
+
+    .presentation h2 {
+      margin-top: 0;
+      color: var(--corsica-green);
+      font-size: 1.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .presentation p {
+      margin-top: 15px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #333;
+      font-style: italic;
+    }
+
+    .presentation audio {
+      margin-top: 20px;
+      width: 100%;
+    }
+
+    .portfolio-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background: var(--corsica-green);
+      color: var(--corsica-white);
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.3s ease;
+    }
+
+    .portfolio-btn:hover {
+      background: #0b5d3b;
+    }
+
+    /* Filtres */
+    input[type="radio"] {
+      display: none;
+    }
+
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+      justify-content: center;
+    }
+
+    .categories label {
+      padding: 10px 18px;
+      border-radius: 30px;
+      border: 2px solid var(--corsica-green);
+      background: var(--corsica-white);
+      color: var(--corsica-green);
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .categories label:hover {
+      background: var(--corsica-green);
+      color: white;
+    }
+
+    input#all:checked ~ main .site-card { display: block; }
+    input#educazione:checked ~ main .site-card:not([data-category="educazione"]) { display: none; }
+    input#media:checked ~ main .site-card:not([data-category="media"]) { display: none; }
+    input#dizziunariu:checked ~ main .site-card:not([data-category="dizziunariu"]) { display: none; }
+    input#instituzione:checked ~ main .site-card:not([data-category="instituzione"]) { display: none; }
+
+    /* Cartes */
+    .site-card {
+      background: var(--corsica-white);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 35px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .site-card h2 {
+      margin-top: 0;
+      color: var(--corsica-green);
+      border-left: 6px solid var(--accent);
+      padding-left: 12px;
+    }
+
+    iframe {
+      width: 100%;
+      height: 320px;
+      border: none;
+      border-radius: 12px;
+      margin-top: 15px;
+    }
+
+    .actions {
+      margin-top: 15px;
+    }
+
+    .actions a, .actions label {
+      display: inline-block;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: var(--corsica-green);
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .actions a:hover, .actions label:hover {
+      background: #06331f;
+    }
+
+    audio {
+      margin-top: 15px;
+      width: 100%;
+    }
+
+    /* Texte audio */
+    input[type="checkbox"] { display: none; }
+
+    .text-audio {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      background: var(--corsica-gray);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      font-style: italic;
+    }
+
+    input[type="checkbox"]:checked + .text-audio {
+      display: block;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #e6e6e6;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+    .logo-container {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+}
+
+#logo {
+  width: 60px; /* taille du logo */
+  cursor: pointer;
+}
+
+
+  </style>
+</head>
+<body>
+<header>
+  <h1>Catalogu di siti in lingua corsa</h1>
+  <p>Educazione · Media · Dizziunariu · Istituzione</p>
+  <div class="logo-container">
+  <img src="TETE.png" alt="Logo" id="logo">
+  <audio id="logo-audio" src="audio/CASATA_Prisentazionespaziu.mp3"></audio>
+
+<script>
+  const logo = document.getElementById('logo');
+  const audio = document.getElementById('logo-audio');
+
+  logo.addEventListener('click', () => {
+    audio.play();
+  });
+</script>
+</div>
+</header>
+
+<!-- Présentation personnelle -->
+<section class="presentation">
+  <h2>Presentazione persunale</h2>
+  <p>
+    Bonghjornu, mi chjamu Badureau Léo, aghju 19 anni. Sò in a filiera MMI à l’Università di Corsica.  
+
+Mi piace u design, a prugrammazione è l’ergunumia. Sò capace di fà video è cuntenuti per e Media. Travaglià incù mè vi permetterà d’amigliurà i vostri siti web è a vostra visibilità. 
+  </p>
+
+  <audio controls src="audio/CASATA_Prisentazionepersunale.mp3"></audio>
+
+  <a href="https://leobadureau.fr/" target="_blank" class="portfolio-btn">Portfolio</a>
+</section>
+
+<!-- Filtres -->
+<input type="radio" name="filter" id="all" checked>
+<input type="radio" name="filter" id="educazione">
+<input type="radio" name="filter" id="media">
+<input type="radio" name="filter" id="dizziunariu">
+<input type="radio" name="filter" id="instituzione">
+
+<main>
+
+  <div class="categories">
+    <label for="all">Tutti</label>
+    <label for="educazione">Educazione</label>
+    <label for="media">Media</label>
+    <label for="dizziunariu">Dizziunariu</label>
+    <label for="instituzione">Istituzione</label>
+  </div>
+
+  <!-- Educazione -->
+  <div class="site-card" data-category="educazione">
+    <h2>parlami corsu</h2>
+    <iframe src="https://parlamicorsu.corsica/"></iframe>
+
+    <div class="actions">
+      <a href="https://parlamicorsu.corsica/" target="_blank">lien du site</a>
+      <label for="text1">Texte sur les voie d'amelioration</label>
+    </div>
+
+    <audio controls src="audio/CASATA_Viedimegliurazione_ParlamiCorsu.mp3"></audio>
+
+    <input type="checkbox" id="text1">
+    <div class="text-audio">
+      <p>Per u situ Parlami Corsu, chì hè di a categuria pedagogia, hè cunsigliatu di mette un buttu per sceglie a lingua.</p>
+    </div>
+  </div>
+  
+
+  <!-- Media -->
+  <div class="site-card" data-category="media">
+    <h2>A piazzetta</h2>
+    <iframe src="https://www.apiazzetta.com/"></iframe>
+
+    <div class="actions">
+      <a href="https://www.apiazzetta.com/" target="_blank">lien du site</a>
+      <label for="text2">Texte sur les voie d'amelioration</label>
+    </div>
+
+    <audio controls src="audio/CASATA_Viedimegliurazione_APiazzetta.mp3"></audio>
+
+    <input type="checkbox" id="text2">
+    <div class="text-audio">
+      <p>Per u situ A Piazzetta, chì hè di a categuria media, l'amigliurazioni sò l'assenza d'un buttone per vultà à l'accoglia è u fattu chì i buttoni sò troppu chjuchi.</p>
+    </div>
+  </div>
+
+  <!-- Dizziunariu -->
+  <div class="site-card" data-category="dizziunariu">
+    <h2>Infcor</h2>
+    <iframe src="https://adecec.net/infcor/"></iframe>
+
+    <div class="actions">
+      <a href="https://adecec.net/infcor/" target="_blank">lien du site</a>
+      <label for="text3">Texte sur les voie d'amelioration</label>
+    </div>
+
+    <audio controls src="audio/CASATA_Viedimegliurazione_Infcor.mp3"></audio>
+
+    <input type="checkbox" id="text3">
+    <div class="text-audio">
+      <p>Per u situ Infcor, chì appartene à a categuria dizziunariu, l'amigliurazioni riguardanu i prublemi cù u menu burger apertu è u cuntrastu di culore di u situ.</p>
+    </div>
+  </div>
+  <div class="site-card" data-category="dizziunariu">
+    <h2>Lingua corsa</h2>
+    <iframe src="https://www.gbatti-alinguacorsa.fr/"></iframe>
+
+    <div class="actions">
+      <a href="https://www.gbatti-alinguacorsa.fr/" target="_blank">lien du site</a>
+      <label for="text4">Texte sur les voie d'amelioration</label>
+    </div>
+
+    <audio controls src="audio/CASATA_Viedimegliurazione_LinguaCorsa.mp3"></audio>
+
+    <input type="checkbox" id="text4">
+    <div class="text-audio">
+      <p>Per u situ Lingua Corsa, chì appartene à a categuria dizziunariu, l'amiglioramenti riguardanu u design, chì hè troppu simplice, è l'ergonomia di u situ.  .</p>
+    </div>
+  </div>
+<div class="site-card" data-category="educazione">
+  <h2>Medialingua</h2>
+  <iframe src="https://www.medialingua.corsica/co/"></iframe>
+
+  <div class="actions">
+    <a href="https://www.medialingua.corsica/" target="_blank">lien du site</a>
+    <label for="text5">Texte sur les voie d'amelioration</label>
+  </div>
+<audio controls src="audio/CASATA_Viedimegliurazione_MediaLingua.mp3"></audio>
+  <input type="checkbox" id="text5">
+  <div class="text-audio">
+    <p>
+      Per u situ Medialingua, chì face parte di a categuria pedagogia, 
+      l’amigliurazione principale hè chì u buttone di scelta di lingua 
+      duveria esse piazzatu in cima di a pagina è micca in fondu.
+    </p>
+  </div>
+</div>
+
+<!-- Educazione -->
+<div class="site-card" data-category="educazione">
+  <h2>Scola Corsa</h2>
+  <iframe src="https://www.scolacorsa.corsica/"></iframe>
+
+  <div class="actions">
+    <a href="https://www.scolacorsa.corsica/" target="_blank">lien du site</a>
+    <label for="text6">Texte sur les voie d'amelioration</label>
+  </div>
+<audio controls src="audio/CASATA_Viedimegliurazione_ScolaCorsa.mp3"></audio>
+  <input type="checkbox" id="text6">
+  <div class="text-audio">
+    <p>
+      Per u situ Scola Corsa, chì hè di a categuria pedagogia, 
+      l’amigliurazioni cunsistenu à aghjustà u CSS à u menu burger 
+      per rende a navigazione più chjara è più muderna.
+    </p>
+  </div>
+</div>
+
+<!-- Institution -->
+<div class="site-card" data-category="instituzione">
+  <h2>Isula.corsica</h2>
+  <iframe src="https://www.isula.corsica/"></iframe>
+
+  <div class="actions">
+    <a href="https://www.isula.corsica/" target="_blank">lien du site</a>
+    <label for="text8">Texte sur les voie d'amelioration</label>
+  </div>
+<audio controls src="audio/CASATA_Viedimegliurazione_IsulaCorsica.mp3"></audio>
+  <input type="checkbox" id="text8">
+  <div class="text-audio">
+    <p>
+      Per u situ Isula.corsica, chì appartene à a categuria istituzione, 
+      l’amigliurazioni sò chì u situ mischja parechje lingue è ùn permette 
+      micca à l’utilizatore di sceglie una sola lingua chjaramente.
+    </p>
+  </div>
+</div>
+</main>
+
+<footer>
+  <p>Lingua è cultura corsa – Prughjettu pedagogicu</p>
+</footer>
+
+</body>
+</html>
